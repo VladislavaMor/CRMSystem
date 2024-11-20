@@ -1,0 +1,45 @@
+﻿@model ModelCustom<ServiceTransfer>
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@using (Html.BeginForm("Edit","Services", FormMethod.Post))
+{
+
+    Html.AntiForgeryToken();
+    Html.HiddenFor(model => model.Id);
+    @Html.HiddenFor(model => model.ImageLink);
+
+    <div>
+        @Html.EditorFor(model => model.Target.Title, new
+        {
+            htmlAttributes = new
+            {
+                @placeholder = "Заголовок"
+            }
+        })
+
+        @Html.ValidationMessageFor(model => model.Target.Title, "", new { @class = "error-text" })
+    </div>
+
+    <div>
+
+        @Html.EditorFor(model => model.Target.Description, new
+        {
+            htmlAttributes = new
+            {   
+                @placeholder = "Описание",
+                @class = "textarea-input"
+            }
+        })
+        @Html.ValidationMessageFor(model => model.Target.Description, "", new { @class = "error-text" })
+    </div>
+
+    <input type="submit"  style="float:right;" value="Отправить" class="button" />
+}
+
+<input
+    type="button"
+    class="button" style="float: right;" 
+    onclick="@("window.location.href='" + Url.Action("Services") + "'");" value="Назад">

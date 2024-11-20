@@ -1,0 +1,94 @@
+﻿@model ModelCustom<ProjectTransfer> 
+
+@{
+    ViewData["Title"] = "Projects";
+}
+<link rel="stylesheet" href="/css/Describe.css" />
+
+<div id="blog">
+
+    <div>
+        @using (Html.BeginForm("Edit", "Projects", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => Model.Id);
+            @Html.HiddenFor(model => Model.ImageLink);
+
+            <div class="block-title">
+                @Html.EditorFor(model => model.Target.Title, new {
+						    htmlAttributes = new {
+							    @placeholder= "Заголовок" } 
+						    })
+                @Html.ValidationMessageFor(model => model.Target.Title, "", new { @class = "error-text" })
+            </div>
+
+            <div class="block-description">
+
+
+                <div class="block-description-image-column">
+
+                    @if (Model.Id == null)
+                    {
+                        <div class="input-file">
+
+                            @Html.EditorFor(model => model.ImageFile, new {
+					            htmlAttributes = new {
+						            @accept= ".png,.jpg"} 
+					            })
+
+                            @Html.ValidationMessage("ImageStatus", new { @class = "error-text" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="block-image">
+                            <img src='@(Model.ImageLink)' onerror="this.src='/Assets/ImageError.png'">    
+                        </div>
+                    }
+
+                </div>
+
+                <div class="block-description-content-column">
+                    @Html.EditorFor(model => model.Target.Description, new {
+					    htmlAttributes = new {
+						    @placeholder= "Описание"} 
+					    })
+                    @Html.ValidationMessageFor(model => model.Target.Description, "", new { @class = "error-text" })
+                </div>
+                            @if (Model.Id != null)
+            {
+                <div class="input-file">
+
+                    @Html.EditorFor(model => model.ImageFile, new {
+					    htmlAttributes = new {
+						    @accept= ".png,.jpg"} 
+					    })
+
+                    @Html.ValidationMessage("ImageStatus", new { @class = "error-text" })
+                </div>
+            }
+            </div>
+
+
+
+
+            <input type="submit" style="float:right;" value="Send" class="button" />
+        }
+    </div>
+
+
+    <button 
+        class="button" style="float: right;" 
+        onclick="@("window.location.href='" + 
+        (Model.Id != null ?
+            Url.Action("Project", new{id = Model.Id}) :
+            Url.Action("Projects")
+        ) + "'");">
+
+        Назад
+
+    </button> 
+
+</div>
+
+

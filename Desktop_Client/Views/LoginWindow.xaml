@@ -1,0 +1,77 @@
+﻿<Window x:Class="Desktop_Client.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Desktop_Client" 
+        d:DataContext="{d:DesignInstance Type=local:LoginVM}"
+        mc:Ignorable="d"
+        x:Name="Window"
+        Title="Авторизация" Height="500" Width="450"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel>
+            <Button
+     Style="{StaticResource DefaultButton}"
+     Margin="20 10"
+     Padding="5"
+     Content="Войти как гость"
+     HorizontalAlignment="Right"
+     Command="{Binding JoinAsGuest, Mode=OneWay}" 
+     CommandParameter="{Binding ElementName=Window}"
+                Height="35"/>
+
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock 
+                Margin="20"
+                FontSize="32"
+                Text="Вход в систему"
+                Padding="10"
+                TextAlignment="Center"/>
+                <TextBox
+                Width="256"
+                Margin="5"
+                d:Text="Логин"
+                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                Padding="10"
+                HorizontalAlignment="Center"/>
+                <TextBox 
+                Width="256"
+                Margin="5"
+                Padding="10"
+                d:Text="Пароль"
+                Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Center"/>
+                <Button
+                Style="{StaticResource DefaultButton}"
+                Margin="20 10"
+                Padding="20 10"
+                Content="Войти"
+                HorizontalAlignment="Center"
+                Command="{Binding JoinWithLogin, Mode=OneWay}" 
+                CommandParameter="{Binding ElementName=Window}"/>
+
+            <TextBlock 
+                     FontSize="18"
+                     Foreground="Red"
+                     Margin="20"
+                     d:Visibility="Visible"
+                     Visibility="{Binding ErrorExcist, Converter={StaticResource BoolToVis}}"
+                     HorizontalAlignment="Center"
+                     d:Text="Ошибка"
+                     Text="{Binding Error}"/>
+        </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

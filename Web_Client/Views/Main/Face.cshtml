@@ -1,0 +1,15 @@
+﻿@model Face
+@{
+	ViewData["Title"] = "Main";
+}
+<div>
+	<div class="face-img"><img src="~/Assets/Studying.png"/></div>
+
+	<div class="face-slogan"><p>@Model.Slogan</p></div>
+
+	<form asp-controller="Main" asp-action="GoWriteConsultation" method="post">
+		<button style="float:right" class="button" type="submit">@Model.CallToAction</button>
+	</form>
+
+</div>
+

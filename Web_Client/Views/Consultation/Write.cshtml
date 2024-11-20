@@ -1,0 +1,55 @@
+﻿@model AppealTransfer
+
+@{
+    ViewData["Title"] = "Consultation";
+}
+
+<div id="consultation" style="margin: 10px;">
+
+	<div class="title-mini">
+		<p>Задайте вопрос или оставьте заявку</p>
+	</div>
+
+	<div>
+
+		@using (Html.BeginForm("Write", "Consultation", FormMethod.Post)){
+			@Html.AntiForgeryToken()
+
+			<div class="form">
+				<div>
+					@Html.EditorFor(model => model.EMail, new {
+						htmlAttributes = new {
+							@placeholder= "E-mail" } 
+						})
+
+					@Html.ValidationMessageFor(model => model.EMail, "", new { @class = "error-text" })
+				</div>
+
+				<div>
+					@Html.EditorFor(model => model.Name, new {
+						htmlAttributes = new {
+							@placeholder= "Имя" } 
+						})
+
+					@Html.ValidationMessageFor(model => model.Name, "", new { @class = "error-text" })
+				
+				</div>
+
+				<div>
+					@Html.EditorFor(model => model.Description, new {
+						htmlAttributes = new {
+							@class = "textarea-input",
+							@placeholder= "Описание" } 
+					})
+
+					@Html.ValidationMessageFor(model => model.Description, "", new { @class = "error-text" })
+
+				</div>
+
+
+				<input type="submit" style="float:right;" value="Send" class="button" />
+
+			</div>
+		}
+	</div>
+</div>

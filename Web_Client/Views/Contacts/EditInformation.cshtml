@@ -1,0 +1,35 @@
+﻿@model ContactsTransfer
+
+<div>
+
+	@using(Html.BeginForm(FormMethod.Post))
+	{		
+		@Html.AntiForgeryToken();
+
+		<div class="contacts-editor">
+
+			@Html.LabelFor(model => model.Adress, "Адресс")
+			@Html.EditorFor(model => model.Adress)
+
+			@Html.LabelFor(model => model.Email, "Электронная почта")
+			@Html.EditorFor(model => model.Email)
+
+
+			@Html.LabelFor(model => model.PhoneNumber, "Номер телефона")
+			@Html.EditorFor(model => model.PhoneNumber)
+
+
+			@Html.LabelFor(model => model.LinkToMapContructor, "Ссылка на карту")
+			@Html.EditorFor(model => model.LinkToMapContructor)
+		</div>
+		<input type="submit" style="float:right;" value="Сохранить" class="button"/>
+	}
+</div>
+
+<button 
+    class="button" style="float: right;" 
+    onclick="@("window.location.href='" + @Url.Action("Contacts") + "'");">
+
+	Назад
+
+</button>

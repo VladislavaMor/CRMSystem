@@ -1,0 +1,30 @@
+﻿@using CRM_Helper;
+@model ModelCustom<SocialMediaTransfer>
+
+@using (Html.BeginForm("EditSocialNetwork", "Contacts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken();
+	<div class="social-network-viewer">
+		<div class="social-network-viewer-image">
+			<img src="@Model.ImageLink">
+		</div>
+		<div class="social-network-viewer-content">
+			@Html.EditorFor(model => model.Target.Link, new {@class = "social-network-field"})
+			@Html.ValidationMessageFor(model => model.Target.Link, "", new { @class = "error-text"})
+		</div>
+		<div class="social-network-viewer-navigation">
+			@Html.EditorFor(model => model.ImageFile, new {
+					    htmlAttributes = new {
+						    @accept= ".png,.jpg"} 
+					    })
+			@Html.ValidationMessage("ImageStatus", new { @class = "error-text" })
+		</div>
+
+		
+	</div>
+
+	<input type="submit" style="float: right;" class="button" value="Сохранить"/>
+}
+
+<input type="button" class="button" style="float: right;" 
+    onclick="@("window.location.href='" + Url.Action("SocialNetworks") + "'")" value="Назад"/>

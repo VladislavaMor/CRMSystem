@@ -1,0 +1,303 @@
+﻿<UserControl x:Class="Desktop_Client.ConsultationsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Desktop_Client" 
+             mc:Ignorable="d" 
+             FontFamily="Arial"
+             d:DesignHeight="600" d:DesignWidth="1000">
+
+    <ScrollViewer>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel                
+                    Margin="0 10 10 10"
+                    Grid.Row="0"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal">
+
+                    <TextBlock 
+                    Padding="10"
+                    FontSize="20px"
+                    Foreground="Black"
+                    TextAlignment="Center"
+                    Text="Всего заявок">
+
+                    </TextBlock>
+
+                    <Border 
+                    CornerRadius="4"
+                    Background="#8332ed">
+
+                        <TextBlock
+                        Padding="20 10"
+                        FontSize="20px"
+                        Foreground="White"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Text="{Binding Consultations.Count}"/>
+                    </Border>
+
+                </StackPanel>
+                <StackPanel 
+                Margin="10 10"
+                Grid.Row="2"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+
+                    <TextBlock 
+                    Padding="10"
+                    FontSize="20px"
+                    Foreground="Black"
+                    TextAlignment="Center"
+                    Text="Заявок за заданный период">
+
+                    </TextBlock>
+
+                    <Border 
+                    CornerRadius="4"
+                    Background="#8332ed">
+
+                        <TextBlock
+                        Padding="20 10"
+                        FontSize="20px"
+                        Foreground="White"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Text="{Binding FilteredConsultations.Count}"/>
+                    </Border>
+
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel 
+            
+                Grid.Row="1"
+                Orientation="Horizontal">
+
+                <Button
+                    Style="{DynamicResource StickyButton}"
+                    Content="Сегодня"
+                    Command="{Binding SetDateDiapasone}"
+                    CommandParameter="0"
+                    Margin="5 10 0 10"/>
+
+                <Button
+                    Style="{DynamicResource StickyButton}"
+                    Content="Вчера"
+                    Command="{Binding SetDateDiapasone}"
+                    CommandParameter="1"/>
+                <Button
+                    Style="{DynamicResource StickyButton}"
+                    Content="Прошлая неделя"
+                    Command="{Binding SetDateDiapasone}"
+                    CommandParameter="7"/>
+
+                <Button
+                    Style="{DynamicResource StickyButton}"
+                    Content="Прошлый месяц"
+                    Command="{Binding SetDateDiapasone}"
+                    CommandParameter="30"/>
+                
+                <Button
+                    Style="{DynamicResource StickyButton}"
+                    Content="Без фильтра"
+                    Command="{Binding SetDateDiapasone}"
+                    CommandParameter="-1"/>
+
+                <StackPanel 
+                    Margin="10"
+                    Orientation="Horizontal">
+
+
+                    <Border 
+                        CornerRadius="8"
+                        Background="#8332ed"
+                        VerticalAlignment="Center">
+
+                        <TextBlock
+                            Padding="20 10"
+                            FontSize="18px"
+                            Foreground="White"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Text="From">
+
+                        </TextBlock>
+
+                    </Border>
+
+                    <DatePicker
+                        Text="Период с"
+                        Margin="10"
+                        VerticalAlignment="Center"
+                        SelectedDate="{Binding FirstDate}">
+
+                    </DatePicker>
+
+
+                    <Border 
+                        VerticalAlignment="Center"
+                        CornerRadius="8"
+                        Background="#8332ed">
+
+                        <TextBlock
+                            Padding="20 10"
+                            FontSize="18"
+                            Foreground="White"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Text="по">
+
+                        </TextBlock>
+
+                    </Border>
+
+                    <DatePicker
+                        Margin="10"
+                        VerticalAlignment="Center"
+                        SelectedDate="{Binding LastDate}">
+
+                    </DatePicker>
+
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel
+                Visibility="{Binding IsLogin, Converter={StaticResource BoolToVis}}"
+                d:Visibility="Visible"
+                Orientation="Horizontal"
+                Grid.Row="3">
+                <StackPanel.Resources>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility">
+                            <Setter.Value>
+
+                                <Binding Path="SelectedConsultation"
+                                         UpdateSourceTrigger="PropertyChanged"
+                                         Converter="{StaticResource ObjectValueExcistToVisibiliyConverter}">
+                                </Binding>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </StackPanel.Resources>
+
+
+                <Button
+                    Visibility="{Binding IsObjectSelected, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}"
+                    Style="{StaticResource EditButton}"
+                    Padding="10"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding EditConsultationStatus}"
+                    IsEnabled="{Binding IsOpenEditStatusMenuElement, Converter={StaticResource InverseBooleanConverter}}"
+                    Margin="5 10"/>
+
+                <StackPanel
+                    d:Visibility="Visible"
+                    Visibility="{Binding IsOpenEditStatusMenuElement, Converter={StaticResource BoolToVis}, UpdateSourceTrigger=PropertyChanged}"
+                    Orientation="Horizontal">
+
+
+
+                    <ComboBox 
+                        Width="120"
+                        Margin="5 10"
+                        FontSize="18"
+                        ItemsSource="{Binding ConsultationStatuses}"
+                        SelectedItem="{Binding SelectedConsultation.Status}">
+
+                    </ComboBox>
+
+                    <Button
+                        Style="{StaticResource AcceptButton}"
+                        Content="✔"
+                        Padding="10"
+                        Margin="5 10"
+                        Command="{Binding SaveConsultationStatus}"/>
+
+                </StackPanel>
+
+
+            </StackPanel>
+
+
+
+            <ListBox
+                Margin="0 10"
+                x:Name="ListOfConsultations"
+                Grid.Row="4"
+                HorizontalContentAlignment="Stretch"
+                ItemsSource="{Binding FilteredConsultations, UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding SelectedConsultation}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="5"/>
+                        <Setter Property="Padding" Value="5"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            BorderThickness="2"
+                            BorderBrush="#8332ed"
+                            CornerRadius="8">
+
+                            <StackPanel Margin="10" 
+                                        >
+                                <TextBlock 
+                                    FontSize="22" 
+                                    Text="{Binding Name}"/>
+
+                                <TextBlock 
+                                    Margin="0 10"
+                                    FontSize="18" 
+                                    TextWrapping="Wrap"
+                                    Text="{Binding Description}"/>
+
+                                <Grid 
+                                    Height="auto">
+
+                                    <Border
+                                        HorizontalAlignment="Left"    
+                                        CornerRadius="4"
+                                        Background="#8332ed">
+                                        <TextBlock 
+                                            Foreground="White"
+                                            Padding="10"
+                                            TextAlignment="Center"
+                                            Text="{Binding Status}" 
+                                            Width="160"
+                                            FontSize="18"/>
+
+                                    </Border>
+
+
+                                    <TextBlock   
+                                        Text="{Binding Created}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Right"/>
+
+                                </Grid>
+
+
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

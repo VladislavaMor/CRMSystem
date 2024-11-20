@@ -1,0 +1,50 @@
+/* полоса прокрутки (скроллбар) */
+
+::-webkit-scrollbar {
+    width: 24px;
+    /* ширина для вертикального скролла */
+    height: 18px;
+    /* высота для горизонтального скролла */
+    background-color: #c4c4c4;
+}
+
+
+/* ползунок скроллбара */
+
+::-webkit-scrollbar-thumb {
+    background-color: #8332ed;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #61ADE8;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: #3f6c8f;
+}
+
+
+/* Стрелки */
+
+::-webkit-scrollbar-button:vertical:start:decrement {
+    border-radius: 2px;
+    background-color: #8332ed;
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+    border-radius: 2px;
+    background-color: #8332ed;
+}
+
+::-webkit-scrollbar-button:horizontal:start:decrement {
+    border-radius: 2px;
+    background: #143861;
+    background-color: #8332ed;
+}
+
+::-webkit-scrollbar-button:horizontal:end:increment {
+    border-radius: 2px;
+    background: #143861;
+    background-color: #8332ed;
+}

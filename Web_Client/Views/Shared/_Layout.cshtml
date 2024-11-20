@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8" />
+    <title>@ViewData["title"]</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/css/MainStyle.css" />
+    <link rel="stylesheet" href="/css/Header.css" />
+    <link rel="stylesheet" href="/css/Toggle.css" />
+    <link rel="stylesheet" href="/css/ScrollbarStyle.css" />
+    <link rel="stylesheet" href="/css/Block.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+    <body>
+
+        <div id="header" class="header">
+
+            <div class="topnav">
+                <div class="identity">
+
+ 
+                    @if (User.Identity == null || !User.Identity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action("Login", "Auth",new { @ReturnUrl = Context.Request.Path} )">Войти</a>
+                    }
+                    else
+                    {
+                        <a title="Выйти из аккаунта" href="@Url.Action("Logout", "Auth",new { @ReturnUrl = Context.Request.Path} )">Выйти</a>
+                    }
+                </div>
+
+                <div class="nave">
+                    @functions {
+                        public string GetNavActive(string navTitle)
+                        {
+                            var title = ViewData["title"];
+                            if (navTitle == title)
+                                return "active";
+                            return "";
+                        }
+                    }   
+                  
+                    <a href="@Url.Action("Face", "Main")" class='@GetNavActive("Main")'>Главная</a>
+                    <a href="@Url.Action("Services", "Services")" class='@GetNavActive("Services")'>Сервисы</a>
+                    <a href="@Url.Action("Projects", "Projects")" class='@GetNavActive("Projects")'>Проекты</a>
+                    <a href="@Url.Action("Blogs", "Blogs")" class='@GetNavActive("Blogs")'>Блоги</a>
+                    <a href="@Url.Action("Contacts", "Contacts")" class='@GetNavActive("Contacts")'>Контакты</a>
+
+                </div>     
+                    
+                <div class="slogan">
+                    <p>"Вперед к мечте!"</p>
+                </div>
+            </div>
+        </div>
+
+            <div id="content" class="content">
+		        @RenderBody()
+            </div>
+  
+    </body>
+</html>

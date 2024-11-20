@@ -1,0 +1,68 @@
+﻿@model List<Service>
+
+@{
+    ViewData["Title"] = "Services";
+}
+
+<div class="title">
+    <p>Сервисы, которые мы предлагаем:</p>
+</div>
+
+@if(User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <div class="block-nav">
+        <input 
+            type="submit" value="Добавить" 
+            onclick="@("window.location.href='" + Url.Action("Edit") + "'");"
+            class="mini-button"/>
+    </div>
+}
+
+
+<div id="toggle-list" class="toggle-list">
+
+    @{
+    foreach (var srvc in Model)
+    {
+        <div id="@srvc.Id" class="toggle">
+
+            <div class="toggle-title">
+                <p>@srvc.Title</p>
+            </div>
+
+            <div class="toggle-context">
+                <p>@srvc.Description</p>
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <div class="block-nav" style="justify-content: right;">
+
+                        <input 
+                            type="button" value="Редактировать" 
+                            onclick="@("window.location.href='" + @Url.Action("Edit", new { id = srvc.Id}) + "'")"
+                            class="mini-button"/>
+            
+                        <input 
+                            type="button" value="Удалить" 
+                            onclick="@("window.location.href='" + @Url.Action("Delete", new { id = srvc.Id}) + "'")"
+                            class="mini-button"/>
+            
+                    </div>
+                }
+            </div>
+        </div>                  
+       
+    }
+    }  
+    <script>
+        const accordion = document.getElementsByClassName('toggle')
+        for (i = 0; i < accordion.length; i++) {
+
+            let toggleTitle = accordion[i].getElementsByClassName("toggle-title")[0]
+
+            toggleTitle.addEventListener('click', function() {
+                this.parentNode.classList.toggle('active')
+            })
+        }
+    </script>
+</div>

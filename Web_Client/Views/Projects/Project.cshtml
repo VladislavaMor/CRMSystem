@@ -1,0 +1,47 @@
+﻿@model ModelCustom<Project>
+
+<link rel="stylesheet" href="/css/Describe.css" />
+
+@{
+    ViewData["Title"] = "Projects";
+}
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <div class="block-nav">
+
+        <input 
+        type="button" value="Изменить" 
+        onclick="@("window.location.href='" + Url.Action("Edit", new { id = Model.Target.Id}) + "'");"
+        class="mini-button"/>
+
+        <input 
+        type="button" value="Удалить" 
+        onclick="@("window.location.href='" + Url.Action("Delete", new { id = Model.Target.Id}) + "'");"
+        class="mini-button"/>
+
+    </div>
+}
+<div id="project"">
+
+    <div id="@Model.Target.Id" class="block-describe">
+
+        <div class="block-describe-title">
+            @Model.Target.Title
+        </div>
+
+        <div class="block-describe-image">
+            <img src='@(Model.ImageLink)' onerror="this.src='/Assets/ImageError.png'">
+        </div>
+
+        <div class="block-describe-text">
+            <a>@Model.Target.Description</a>
+        </div>
+
+    </div>
+
+    <button class="button" style="float: right;" onclick="@("window.location.href='" + Url.Action("Projects") + "'");">
+	    Назад
+    </button>
+
+</div>
+

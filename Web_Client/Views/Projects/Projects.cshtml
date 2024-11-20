@@ -1,0 +1,39 @@
+﻿@model List<ModelCustom<Project>>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<div class="title">
+    <a>Проекты</a>
+</div>
+
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <div class="block-nav">
+
+        <input 
+        type="button" value="Добавить" 
+        onclick="@("window.location.href='" + Url.Action("Edit") + "'");"
+        class="mini-button"/>
+
+    </div>
+}
+<div id="projectScroller" class="scroller">
+
+    @{ 
+    foreach (var proj in Model)
+    {
+        <div class="block">
+            <a href="@Url.Action("Project", new{id = proj.Target.Id})">
+                <div class="block-image">       
+                     <img src='@(proj.ImageLink)' onerror="this.src='/Assets/ImageError.png'">
+                </div>
+                <div class="block-title-in">
+                    <p>@proj.Target.Title</p>
+                </div>
+            </a>
+        </div>
+    }
+    }
+</div>

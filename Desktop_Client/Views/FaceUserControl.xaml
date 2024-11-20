@@ -1,0 +1,153 @@
+﻿<UserControl x:Class="Desktop_Client.FaceUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Desktop_Client"
+             d:Height="800"
+             d:Width="1200"
+             FontFamily="Arial"
+             mc:Ignorable="d" >
+    <StackPanel>
+        <StackPanel
+            Visibility="{Binding IsLogin, Converter={StaticResource BoolToVis}}"
+            Margin="20 5"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <Button
+                Visibility="{Binding IsObjectSelect, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}"
+                Style="{StaticResource EditButton}"
+                Padding="10"
+                VerticalAlignment="Top"
+                Command="{Binding Edit}"
+                IsEnabled="{Binding IsObjectSelect, Converter={StaticResource BoolToVis}}"
+                Margin="5 10"/>
+
+
+            <Button
+                Style="{StaticResource EditButton}"
+                d:Visibility="Visible"
+                Visibility="{Binding IsObjectEdit, Converter={StaticResource BoolToVis}}"
+                VerticalAlignment="Bottom"
+                Content="✖"
+                Padding="10"
+                Command="{Binding Return}"/>
+
+            <Button
+                d:Visibility="Visible"
+                Visibility="{Binding IsObjectEdit, Converter={StaticResource BoolToVis}}"
+                Style="{StaticResource AcceptButton}"
+                VerticalAlignment="Bottom"
+                Padding="10"
+                Command="{Binding Save}"/>
+        </StackPanel>
+
+        <Grid VerticalAlignment="Top"
+              Margin="20 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <WrapPanel
+                Grid.Column="1"
+                Height="600px"
+                Name ="container">
+                <Image
+                    Margin="0"
+                    d:Source="/Images/Studying.jpg"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                    Stretch="UniformToFill"
+                    Source="{Binding BackGroundImage, Converter={StaticResource NameToPictureConverter}}">
+                </Image>
+            </WrapPanel>
+            <Grid
+                Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid 
+                    Grid.Row="0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="30">
+                    
+                    <TextBlock
+                        x:Name="slogan"
+                        Visibility="{Binding IsObjectEdit, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BollToVisRevertCombineConverter}}"
+                        Padding="12"
+                        d:Text="Консалтинг без регистрации и смс"
+                        Text="{Binding Slogan, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="42"
+                        TextWrapping="WrapWithOverflow"
+                        Foreground="#00548f"/>
+                    
+                    <TextBox 
+                        Padding="10"
+                        d:Text="Консалтинг без регистрации и смс"
+                        d:Visibility="Visible"
+                        Visibility="{Binding ElementName=slogan, Path=Visibility, Converter={StaticResource VisibilityReverter}}"
+                        Background="{x:Null}"
+                        BorderThickness="2"
+                        FontSize="42"
+                        TextWrapping="WrapWithOverflow"
+                        BorderBrush="{DynamicResource MainColor}"
+                        Text="{Binding Slogan, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+                    
+                </Grid>
+
+                <Grid
+                    Grid.Row="1"
+                    Margin="40"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right">
+                    
+                    <Button
+                        d:Visibility="Visible"
+                        Visibility="{Binding IsObjectEdit, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BollToVisRevertCombineConverter}}"
+                        x:Name="CallToAction"
+                        FontSize="22"
+                        Padding="60 20"   
+                        Style="{StaticResource DefaultButton}"
+                        d:Content="Оставить заявку"
+                        Content="{Binding CallToAction, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                    <TextBox 
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Padding="60 20" 
+                        d:Text="Оставить заявку"
+                        d:Visibility="Visible"
+                        TextWrapping="WrapWithOverflow"
+                        Visibility="{Binding ElementName=CallToAction, Path=Visibility, Converter={StaticResource VisibilityReverter}}"
+                        Background="{x:Null}"
+                        BorderThickness="4"
+                        FontSize="22"
+                        BorderBrush="{DynamicResource MainColor}"
+                        Text="{Binding CallToAction, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="4"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+                </Grid>
+
+
+            </Grid>
+
+
+        </Grid>
+    </StackPanel>
+
+</UserControl>

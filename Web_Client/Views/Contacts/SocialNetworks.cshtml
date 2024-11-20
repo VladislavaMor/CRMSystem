@@ -1,0 +1,45 @@
+﻿@using CRM_Helper;
+@model List<ModelCustom<SocialMedia>>
+<link rel="stylesheet" href="/css/BlockDesctiption.css" />
+
+<div style="display: grid; gap: 10px;">
+    <div class="block-nav">
+        <input type="button" value="Добавить" class="mini-button" 
+            onclick="@("window.location.href='" + @Url.Action("EditSocialNetwork") + "'")" />
+    </div>
+
+    <div class="social-network-list">
+	    @foreach (var mc in Model)
+	    {
+            <div class="social-network-viewer">
+
+		        <div class="social-network-viewer-image">
+			        <img src="@mc.ImageLink">
+		        </div>
+		        <div class="social-network-viewer-content">
+                    <div>
+                        @mc.Target.Link
+                    </div>
+		        </div>
+
+                 <div class="social-network-viewer-navigation">
+
+                    <input 
+                        type="button" value="Редаатировать" class="mini-button"
+                        onclick="@("window.location.href='" + @Url.Action("EditSocialNetwork", new { id = mc.Id}) + "'")" />
+                
+                    <input 
+                        type="button" value="Удалить" class="mini-button"
+                        onclick="@("window.location.href='" + @Url.Action("DeleteSocialNetwork", new { id = mc.Id}) + "'")"/>
+
+                </div>
+            </div>
+	    }
+    </div>    
+</div>
+<div>
+    <input class="button" style="float: right;" 
+        type="button" value="Назад"
+        onclick="@("window.location.href='" + @Url.Action("Contacts") + "'");"/>
+</div>
+

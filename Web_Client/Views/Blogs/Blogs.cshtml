@@ -1,0 +1,45 @@
+﻿@model List<ModelCustom<Blog>>
+
+@{
+    ViewData["Title"] = "Блоги";
+}
+
+<div class="title">
+    <a>Блоги</a>
+</div>
+
+@if(User.Identity != null && User.Identity.IsAuthenticated)
+{
+   <div class="block-nav">
+        <input 
+            type="button" value="Добавить" 
+            onclick="@("window.location.href='" + Url.Action("Edit") + "'");"
+            class="mini-button"/>
+   </div> 
+}
+
+
+<div id="blogsScroller" class="scroller">
+
+    @{
+    foreach (var bm in Model)
+    {
+        <div class="block">
+            <div class="created">
+                <a>@bm.Target.Created</a>
+            </div>
+
+            <a href="@Url.Action("Blog", new{id = bm.Target.Id})">
+                <div class="block-image"> 
+                    <img src='@(bm.ImageLink)' onerror="this.src='/Assets/ImageError.png'">
+                </div>
+            </a>
+
+            <div class="block-title-under">
+                <p>@bm.Target.Title</p>
+            </div>
+        </div>
+    }
+    }
+   
+</div>

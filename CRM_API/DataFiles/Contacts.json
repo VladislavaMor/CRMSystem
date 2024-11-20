@@ -1,0 +1,13 @@
+{
+  "Adress": "г.Москва, ул.Ленина, д.1",
+  "PhoneNumber": "+7-800-555-35-99",
+  "Email": "CRM@yandex.ru",
+  "LinkToMapContructor": "https://yandex.ru/maps/-/CDxZ6E0C;source=constructor",
+  "SocialMedias": [
+    {
+      "Id": "d37f2a34-59ea-40d6-91ab-d0680befee2a",
+      "Link": "https://github.com/VladislavaMor/Final_SkillProfi",
+      "PictureName": "84F5B268-C042-41D3-9716-BAC8DE0FD080"
+    }
+  ]
+}
